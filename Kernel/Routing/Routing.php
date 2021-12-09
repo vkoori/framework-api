@@ -3,13 +3,14 @@ namespace Routing;
 
 use FastRoute\Dispatcher;
 use Controller\ApiResponse;
+use Kernel\Caller;
 
 
 /**
  * 
  */
 class Route extends ApiResponse {
-	use RouteServiceProvider, RouteFileCaller;
+	use RouteServiceProvider, RouteFileCaller, Caller;
 
 	public static function boot() {
 		# Register reoutes

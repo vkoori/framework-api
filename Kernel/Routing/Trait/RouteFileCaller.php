@@ -1,6 +1,7 @@
 <?php 
 namespace Routing;
 
+
 /**
  * 
  */
@@ -35,8 +36,8 @@ trait RouteFileCaller {
 
 				$middleware = "\\Middleware\\$m_a[0]";
 
-
-				$result = call_user_func_array([new $middleware, "handle"], [&$vars, $middleArgs]);
+				# call controller
+				$result = self::fire($middleware, "handle", [&$vars, $middleArgs]);
 				if ($result !== true)
 					self::output([], 401, ["401"]);
 			}
@@ -53,7 +54,7 @@ trait RouteFileCaller {
 		[$controllerNS, $method] = explode('@', $controller);
 
 		# call controller
-		call_user_func_array([new $controllerNS, $method], [$vars]);
+		self::fire($controllerNS, $method, $vars);
 	}
 
 	/**

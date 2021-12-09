@@ -1,9 +1,10 @@
 <?php 
+namespace Services;
 
 /**
  * 
  */
-class Users extends \Controller\ResponseController{
+class Users extends Service{
 	
 	/**
 	 * get userid with @param $token
@@ -21,30 +22,9 @@ class Users extends \Controller\ResponseController{
 		$data = $resp['body']->data;
 
 		if (empty($data))
-			return self::output([], 401, [__messages('user_not_found')]);
+			return $this->serviceError([], 401, [I18n('user_not_found')]);
 
 		$userid = $data[0]->userid;
 		return $userid;
-	}
-
-	/**
-	 * get userinfo with @param $userIds
-	 * @return json
-	 */
-	public function UserInfo($userIds) {
-		$url = _env('USER_BASE')."/api/v1/micro/info/".$userIds;
-		$method = "GET";
-		$body = [];
-		$header = array(
-			"Clientid" => _env('USER_CLIENTID')
-		);
-
-		$resp = $this->serviceCaller($method, $url, $body, $header);
-		$data = $resp['body']->data;
-
-		if (empty($data))
-			die(self::output([], 401, ['user_not_found']));
-
-		return $data;
 	}
 }
