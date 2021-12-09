@@ -1,9 +1,10 @@
 <?php 
+namespace Services;
 
 /**
  * 
  */
-class Admins extends \Controller\ResponseController{
+class Admins extends Service{
 	
 	/**
 	* call administrator webservice
@@ -23,7 +24,7 @@ class Admins extends \Controller\ResponseController{
 		$data = $resp['body']->data;
 
 		if (empty($data))
-			return self::output([], 401, [__messages('auth_failed')]);
+			return $this->serviceError([], 401, [I18n('auth_failed')]);
 		
 		if ($data[0]->state != _env('VERIFIED_ADMIN'))
 			$access = '';

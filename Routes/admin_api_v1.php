@@ -1,23 +1,23 @@
 <?php 
 
-$api_dir = 'api/v1/admin/';
+$namespace = 'Api\\V1\\Controller\\Admin\\';
 
 /*------------------- price & off -------------------*/
 $r->addRoute('POST', '/prices', [
-	'use' => $api_dir.'Price@modify',
+	'use' => $namespace.'Price@modify',
 	'middleware' => 'HasAccess:price_manager'
 ]);
 $r->addRoute('GET', '/prices/{id}', [
-	'use' => $api_dir.'Price@show',
+	'use' => $namespace.'Price@show',
 	'middleware' => 'HasAccess:price_manager'
 ]);
 
 /*------------------- package -------------------*/
 $r->addRoute('POST', '/plan', [
-	'use' => $api_dir.'Plan@store',
+	'use' => $namespace.'Plan@store',
 	'middleware' => 'HasAccess:packager'
 ]);
 $r->addRoute('DELETE', '/plan/{planId}', [
-	'use' => $api_dir.'Plan@delete',
+	'use' => $namespace.'Plan@delete',
 	'middleware' => 'HasAccess:packager'
 ]);

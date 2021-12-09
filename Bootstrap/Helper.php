@@ -60,25 +60,40 @@ if( !config("APP_DEBUG") ) {
 }
 
 # file scanner
-function getDirContents($dir, &$results = array()) {
-    $files = scandir($dir);
+// function getDirContents($dir, &$results = array()) {
+//     $files = scandir($dir);
 
-    foreach ($files as $value) {
-        $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-        if (!is_dir($path)) {
-        	if (pathinfo($path, PATHINFO_EXTENSION) == 'php') {
-            	$results[] = $path;
-        	}
-        } else if ($value != "." && $value != "..") {
-            getDirContents($path, $results);
-        }
-    }
+//     foreach ($files as $value) {
+//         $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+//         if (!is_dir($path)) {
+//         	if (pathinfo($path, PATHINFO_EXTENSION) == 'php') {
+//             	$results[] = $path;
+//         	}
+//         } else if ($value != "." && $value != "..") {
+//             getDirContents($path, $results);
+//         }
+//     }
 
-    return $results;
-}
+//     return $results;
+// }
 
 # composer dump-autoload
-$controllerClasses = getDirContents(dirname(__DIR__, 1).'/App');
-foreach ($controllerClasses as $controllerClass) {
-	require_once $controllerClass;
+// $controllerClasses = getDirContents(dirname(__DIR__, 1).'/App');
+// var_dump($controllerClasses);
+// foreach ($controllerClasses as $controllerClass) {
+// 	require_once $controllerClass;
+// }
+
+spl_autoload_register('myAutoloader');
+
+function myAutoloader($className)
+{
+	$className = str_replace("/","\\",$className);
+	if (!class_exists($className)) {
+		$className = str_replace("\\","/",$className);
+		$className = "/".ltrim($className, "/");
+		if (file_exists(app_path().$className.'.php')) {
+	    	include app_path().$className.'.php';
+		}
+	}
 }

@@ -1,12 +1,16 @@
 <?php 
-namespace API;
+namespace Api\V1\Controller\User;
 
+use Controller\BaseController;
+use Controller\ApiResponse;
 use Plugins\Cache;
+use DB\IlluminateDB as DB;
+use Models\XService;
 
 /**
  * 
  */
-class Off {
+class Off extends BaseController {
 
 	/**
 	* 
@@ -27,8 +31,9 @@ class Off {
 			echo $CachedString->get();
 		}
 
-
-		var_dump('mixed:value');exit;
+		DB::conn();
+		$x = XService::first();
+		ApiResponse::output($x);
 	}
 
 }

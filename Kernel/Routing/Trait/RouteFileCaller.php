@@ -35,6 +35,7 @@ trait RouteFileCaller {
 
 				$middleware = "\\Middleware\\$m_a[0]";
 
+
 				$result = call_user_func_array([new $middleware, "handle"], [&$vars, $middleArgs]);
 				if ($result !== true)
 					self::output([], 401, ["401"]);

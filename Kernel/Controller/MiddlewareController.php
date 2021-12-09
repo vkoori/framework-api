@@ -1,12 +1,10 @@
 <?php 
 namespace Controller;
 
-// use kernel\plugins\common as func;
-
 /**
  * 
  */
-class MiddlewareController extends ResponseController {
+class MiddlewareController extends ApiResponse {
 
 	/**
 	* check is set Token into header?
@@ -14,12 +12,12 @@ class MiddlewareController extends ResponseController {
 	*/
 	protected function getToken() {
 		if (!isset(getallheaders()['Token']))
-			return self::output([], 422, [__messages('unprocessable_entity')]);
+			return self::output([], 422, [I18n('unprocessable_entity')]);
 
 		$token = getallheaders()['Token'];
 
 		if ($token == '')
-			return self::output([], 422, [__messages('unprocessable_entity')]);
+			return self::output([], 422, [I18n('unprocessable_entity')]);
 
 		return $token;
 	}

@@ -49,16 +49,20 @@ class Cache {
 	}
 
 	private static function Redis() {
-		if (!class_exists(\Redis::class)) {
-			throw new \Phpfastcache\Exceptions\PhpfastcacheDriverCheckException('Unable to test Redis client because the extension seems to be missing');
-		}
+		try {
+			if (!class_exists(\Redis::class)) {
+				throw new \Phpfastcache\Exceptions\PhpfastcacheDriverCheckException('Unable to test Redis client because the extension seems to be missing');
+			}
 
-		self::$InstanceCache = CacheManager::getInstance('Redis', new \Phpfastcache\Drivers\Redis\Config([
-			'host' 			=> '127.0.0.1', //Default value
-			'port' 			=> 6379, //Default value
-			'password' 		=> null, //Default value
-			'database' 		=> null, //Default value
-		]));
+			self::$InstanceCache = CacheManager::getInstance('Redis', new \Phpfastcache\Drivers\Redis\Config([
+				'host' 			=> '127.0.0.1', //Default value
+				'port' 			=> 6379, //Default value
+				'password' 		=> null, //Default value
+				'database' 		=> null, //Default value
+			]));
+		} catch (\Throwable $e) {
+			throw new \Phpfastcache\Exceptions\PhpfastcacheDriverCheckException( $e->getMessage() );
+		}
 	}
 
 }

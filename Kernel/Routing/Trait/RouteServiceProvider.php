@@ -18,9 +18,6 @@ trait RouteServiceProvider {
 			$r->addGroup($web_prefix.'/admin/api/v1', function (RouteCollector $r) {
 				require dirname(__DIR__, 3).'/routes/admin_api_v1.php';
 			});
-			$r->addGroup($web_prefix.'/user/api/v1', function (RouteCollector $r) {
-				require dirname(__DIR__, 3).'/routes/user_api_v1.php';
-			});
 		});
 		return $dispatcher;
 	}

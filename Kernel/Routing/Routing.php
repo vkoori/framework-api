@@ -2,13 +2,13 @@
 namespace Routing;
 
 use FastRoute\Dispatcher;
-use Controller\ResponseController;
+use Controller\ApiResponse;
 
 
 /**
  * 
  */
-class Route extends ResponseController {
+class Route extends ApiResponse {
 	use RouteServiceProvider, RouteFileCaller;
 
 	public static function boot() {
